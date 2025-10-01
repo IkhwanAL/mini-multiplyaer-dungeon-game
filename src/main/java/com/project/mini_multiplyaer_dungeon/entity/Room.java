@@ -1,9 +1,16 @@
 package com.project.mini_multiplyaer_dungeon.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
@@ -17,9 +24,22 @@ public class Room {
 
   private String name;
 
-  @OneToMany
-  private Item item[];
+  @ManyToMany
+  @JoinTable(
+    name = "room_item",
+    joinColumns = @JoinColumn(name = "room_id"),
+    inverseJoinColumns = @JoinColumn(name = "item_id")
+  )
+  private List<Item> items = new ArrayList<Item>();
 
-  @OneToMany
-  private Monster monster[];
+  @ManyToMany
+  @JoinTable(
+    name = "room_monsters",
+    joinColumns = @JoinColumn(name = "room_id"),
+    inverseJoinColumns = @JoinColumn(name = "monster_id")
+  )
+  private List<Monster> monsters = new ArrayList<Monster>();
+
+  @OneToMany(mappedBy = "currentRoom")
+  private List<Player> players = new ArrayList<Player>();
 }

@@ -1,9 +1,12 @@
-package com.project.mini_multiplyaer_dungeon.entity
+package com.project.mini_multiplyaer_dungeon.entity;
+
+import org.hibernate.annotations.CascadeType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
@@ -19,5 +22,6 @@ public class Player {
   private int health = 100;
 
   @ManyToOne
+  @JoinColumn(name = "room_id")
   private Room currentRoom;
 }
